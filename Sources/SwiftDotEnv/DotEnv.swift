@@ -7,12 +7,7 @@
 
 import Foundation
 
-#if os(Linux)
-import Glibc
-#else
 import Darwin
-#endif
-
 
 public struct DotEnv {
     public let filePath: String
@@ -83,8 +78,9 @@ public struct DotEnv {
     }
     
     
-    /// Returns the value for `key` in the environment, returning the default if not present
+    /// Returns the value for `key` in the environment, returning the `default` if not present
     /// - Parameter key: key
+    /// - Parameter default: The value the return will default to
     /// - Returns: value for `key`
     public func value(_ key: String, _ default: String? = nil) -> String? {
         guard let value = getenv(key) else {
@@ -94,9 +90,9 @@ public struct DotEnv {
     }
     
     
-    /// Returns the integer value for `key` in the environment, returning default if not present
+    /// Returns the integer value for `key` in the environment, returning `default` if not present
     /// - Parameter key: key
-    /// - Parameter key: key
+    /// - Parameter default: The value the return will default to
     /// - Returns: value for `key`
     public func int(for key: String, _ default: Int? = nil) -> Int? {
         guard let value = value(key) else {
@@ -105,9 +101,9 @@ public struct DotEnv {
         return Int(value) ?? `default`
     }
     
-    /// Returns the boolean value for `key` in the environment, returning default if not present
+    /// Returns the boolean value for `key` in the environment, returning `default` if not present
     /// - Parameter key: key
-    /// - Parameter key: key
+    /// - Parameter default: The value the return will default to
     /// - Returns: value for `key`
     public func bool(for key: String, _ default: Bool? = nil) -> Bool? {
         guard let value = value(key) else {
